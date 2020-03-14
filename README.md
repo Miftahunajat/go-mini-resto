@@ -15,10 +15,11 @@ This project should use
 ## Build Instruction
 Run
 1. `bundle install`
-2. `rails s`
+2. `rails db:create`
+3. `rails db:migrate`
 
 ## Test Instruction
-TBD
+run `rspec`
 
 ## Run Instruction
-TBD
+run `rails s`
