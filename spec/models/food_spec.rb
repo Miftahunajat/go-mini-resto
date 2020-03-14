@@ -5,6 +5,10 @@ RSpec.describe Food, :type => :model do
     expect(Food.new(name: 'name', description: 'desc', price: 0)).to be_valid
   end
 
+  it 'is not valid when price is not numeric' do
+    expect(Food.new(name: 'name', description: 'desc', price: 'seribu')).to_not be_valid
+  end
+
   it 'is not valid without a name' do
     food = Food.new(name: nil)
     expect(food).to_not be_valid
