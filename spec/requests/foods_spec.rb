@@ -16,11 +16,11 @@ RSpec.describe "/foods", type: :request do
   # Food. As you add validations to Food, be sure to
   # adjust the attributes here as well.
   let(:valid_attributes) {
-    skip("Add a hash of attributes valid for your model")
+    {name: 'pisang goreng', description: 'pisang digoreng dadakan', price: 5000}
   }
 
   let(:invalid_attributes) {
-    skip("Add a hash of attributes invalid for your model")
+    {name: 'pisang goreng', description: 'pisang digoreng dadakan', price: nil}
   }
 
   describe "GET /index" do
@@ -85,14 +85,16 @@ RSpec.describe "/foods", type: :request do
   describe "PATCH /update" do
     context "with valid parameters" do
       let(:new_attributes) {
-        skip("Add a hash of attributes valid for your model")
+        { name: 'tahu isi pedas', description: 'tahu isinya pedas', price: 7500}
       }
 
       it "updates the requested food" do
         food = Food.create! valid_attributes
         patch food_url(food), params: { food: new_attributes }
         food.reload
-        skip("Add assertions for updated state")
+        expect(food.name).to eq(new_attributes[:name])
+        expect(food.description).to eq(new_attributes[:description])
+        expect(food.price).to eq(new_attributes[:price])
       end
 
       it "redirects to the food" do
