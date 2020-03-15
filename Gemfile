@@ -13,6 +13,9 @@ gem 'turbolinks', '~> 5'
 gem 'webpacker', '~> 4.0'
 gem 'twitter-bootstrap-rails'
 gem 'rubyzip', '~> 2.2.0'
+gem 'travis'
+
+
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

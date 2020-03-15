@@ -1,0 +1,34 @@
+language: ruby
+rvm:
+- 2.0.0
+- 1.9.3
+- jruby-19mode
+- rbx-2
+
+
+
+services:
+  - docker
+
+before_install:
+  - export CI_COMMIT=$(echo ${TRAVIS_COMMIT:0:8})
+  - echo $CI_COMMIT
+  - docker build -t $DOCKER_HUB_USERNAME/hello-node:$CI_COMMIT .
+  - docker images
+  - 'which ssh-agent || (sudo apt-get update -y && sudo apt-get install -y openssh-client)'
+  - eval $(ssh-agent -s)
+  - ssh-add <(echo $SSH_PRIVATE_KEY | base64 -d)
+  - mkdir -p ~/.ssh
+  - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+
+# script:
+#  — bundle install — jobs=3 — retry=3
+#  — bundle exec rake db:create
+#  — bundle exec rake db:migrate
+#  — bundle exec rspec
+
+install:
+  - docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
+  - docker push $DOCKER_HUB_USERNAME/hello-node:$CI_COMMIT
+  - ssh $DEPLOYMENT_HOST "docker pull $DOCKER_HUB_USERNAME/hello-node:$CI_COMMIT"
+  - ssh $DEPLOYMENT_HOST "docker run -d -p 4321:3000 $DOCKER_HUB_USERNAME/hello-node:$CI_COMMIT"
