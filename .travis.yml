@@ -18,11 +18,6 @@ before_install:
   - mkdir -p ~/.ssh
   - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
 
-# script:
-#  — bundle install — jobs=3 — retry=3
-#  — bundle exec rake db:create
-#  — bundle exec rake db:migrate
-#  — bundle exec rspec
 
 install:
   - docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
